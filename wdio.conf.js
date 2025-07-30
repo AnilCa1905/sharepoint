@@ -82,7 +82,7 @@ export const config = {
 				args: [
 					'--window-size=1920,1080',
 					'--incognito',
-					'--headless=new',
+					//'--headless=new',
 					//'--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36',
 				],
 				excludeSwitches: ['enable-automation'],
@@ -105,7 +105,7 @@ export const config = {
 	// Define all options that are relevant for the WebdriverIO instance here
 	//
 	// Level of logging verbosity: trace | debug | info | warn | error | silent
-	logLevel: 'error',
+	logLevel: 'silent',
 	//
 	// Set specific log levels per logger
 	// loggers:

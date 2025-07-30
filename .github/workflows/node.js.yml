@@ -48,8 +48,8 @@ jobs:
         uses: su-dont/share-point-uploader@v2.1
         with:
           sp_url: https://testingmavens-my.sharepoint.com
-          sp_username: anil.alexander@testingmavens.com
-          sp_password: TMavensin@1905
+          sp_username: ${{ secrets.SP_USERNAME }}
+          sp_password: ${{ secrets.SP_PASSWORD }}
           sp_folder: Shared Documents/SHAREPOINT
           sp_file_name: complete.html
           file: test/.artifacts/allure-report/complete.html

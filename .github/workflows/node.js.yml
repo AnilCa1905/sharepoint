@@ -43,13 +43,47 @@ jobs:
           name: Allure report
           path: test/.artifacts/allure-report/complete.html
 
+      name: SHARE POINT
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    name: SharePoint Report Uploader
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm run test
+
+      - name: Install Allure CommandLine
+        if: always()
+        run: npm i -g allure-commandline
+
+      - name: Combine Allure Report
+        if: always()
+        run: npm run allureCombine
+
       - name: Upload Allure Report to SharePoint
         if: always()
-        uses: su-dont/share-point-uploader@v2.1
+        uses: justinmclawhorn/spo-file-upload@v1
         with:
-          sp_url: https://testingmavens-my.sharepoint.com/my?id=%2Fpersonal%2Fanil%5Falexander%5Ftestingmavens%5Fcom%2FDocuments%2FSHAREPOINT
-          sp_username: ${{ secrets.username }}
-          sp_password: ${{ secrets.password }}
-          sp_folder: My files/SHAREPOINT
-          sp_file_name: complete.html
-          file: test/.artifacts/allure-report/complete.html
+          site_url: https://testingmavens-my.sharepoint.com/personal/anil_alexander_testingmavens_com
+          username: ${{ secrets.username }}
+          password: ${{ secrets.password }}
+          destination_path: Documents/SHAREPOINT
+          source_path: test/.artifacts/allure-report/complete.html
+

@@ -34,10 +34,11 @@ jobs:
 
       - name: Upload Allure Report to SharePoint
         if: always()
-        uses: justinmclawhorn/spo-file-upload@v1
+        uses: su-dont/share-point-uploader@v2.1
         with:
-          site_url: https://testingmavens-my.sharepoint.com/personal/anil_alexander_testingmavens_com
-          username: ${{ secrets.username }}
-          password: ${{ secrets.password }}
-          destination_path: Documents/SHAREPOINT
-          source_path: test/.artifacts/allure-report/complete.html
+          sp_url: https://testingmavens-my.sharepoint.com
+          sp_username: ${{ secrets.username }}
+          sp_password: ${{ secrets.password }}
+          sp_folder: personal/anil_alexander_testingmavens_com/Documents/SHAREPOINT
+          sp_file_name: complete.html
+          file: test/.artifacts/allure-report/complete.html

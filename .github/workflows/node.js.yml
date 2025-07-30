@@ -1,49 +1,4 @@
-name: SharePoint
-
-on:
-  workflow_dispatch:
-
-jobs:
-  test:
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
-
-    runs-on: ubuntu-latest
-    name: Share point <-> Git
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: npm
-
-      - name: Install packages
-        run: npm install
-
-      - name: Execute tests
-        run: npm run test
-
-      - name: Install Allure CommandLine
-        if: always()
-        run: npm i -g allure-commandline
-
-      - name: Combine Allure
-        if: always()
-        run: npm run allureCombine
-
-      - name: Upload Test Report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: Allure report
-          path: test/.artifacts/allure-report/complete.html
-
-      name: SHARE POINT
+name: SHARE POINT
 
 on:
   workflow_dispatch:
@@ -86,4 +41,3 @@ jobs:
           password: ${{ secrets.password }}
           destination_path: Documents/SHAREPOINT
           source_path: test/.artifacts/allure-report/complete.html
-

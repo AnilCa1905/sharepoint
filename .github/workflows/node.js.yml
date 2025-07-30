@@ -47,9 +47,9 @@ jobs:
         if: always()
         uses: su-dont/share-point-uploader@v2.1
         with:
-          sp_url: https://testingmavens-my.sharepoint.com
-          sp_username: ${{ secrets.SP_USERNAME }}
-          sp_password: ${{ secrets.SP_PASSWORD }}
-          sp_folder: Shared Documents/SHAREPOINT
+          sp_url: https://testingmavens-my.sharepoint.com/my?id=%2Fpersonal%2Fanil%5Falexander%5Ftestingmavens%5Fcom%2FDocuments%2FSHAREPOINT
+          sp_username: ${{ secrets.username }}
+          sp_password: ${{ secrets.password }}
+          sp_folder: My files/SHAREPOINT
           sp_file_name: complete.html
           file: test/.artifacts/allure-report/complete.html

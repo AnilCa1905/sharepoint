@@ -1,12 +1,31 @@
-name: SHARE POINT
+name: 'SharePoint CI/CD'
 
 on:
+  release:
+    types: [created]
   workflow_dispatch:
 
 jobs:
-  test:
+  publish:
+    name: Publish Release to SharePoint
+    if: github.event_name == 'release'
     runs-on: ubuntu-latest
-    name: SharePoint Report Uploader
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Publish to SharePoint
+        uses: obrassard/action-sharepoint-publish@v1.0.1
+        with:
+          site_url: 'https://you.sharepoint.com/sites/mySite'
+          library_folder: 'Shared documents/releases'
+          sharepoint_user: ${{ secrets.USER }}
+          sharepoint_password: ${{ secrets.PASSWORD }}
+
+  allure_report:
+    name: Upload Allure Report to SharePoint
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
@@ -32,13 +51,12 @@ jobs:
         if: always()
         run: npm run allureCombine
 
-      - name: Upload Allure Report to SharePoint
+      - name: Upload Allure Report HTML to SharePoint
         if: always()
-        uses: su-dont/share-point-uploader@v2.1
+        uses: obrassard/action-sharepoint-publish@v1.0.1
         with:
-          sp_url: https://testingmavens-my.sharepoint.com
-          sp_username: ${{ secrets.username }}
-          sp_password: ${{ secrets.password }}
-          sp_folder: personal/anil_alexander_testingmavens_com/Documents/SHAREPOINT
-          sp_file_name: complete.html
-          file: test/.artifacts/allure-report/complete.html
+          site_url: 'https://testingmavens-my.sharepoint.com'
+          library_folder: 'personal/anil_alexander_testingmavens_com/Documents/SHAREPOINT'
+          sharepoint_user: ${{ secrets.username }}
+          sharepoint_password: ${{ secrets.password }}
+          source_path: 'test/.artifacts/allure-report/complete.html'

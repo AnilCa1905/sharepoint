@@ -10,6 +10,7 @@ jobs:
     name: Publish Release to SharePoint
     if: github.event_name == 'release'
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -20,7 +21,7 @@ jobs:
           site_url: 'https://testingmavens-my.sharepoint.com'
           library_folder: 'personal/anil_alexander_testingmavens_com/Documents/SHAREPOINT'
           sharepoint_user: ${{ secrets.username }}
-          sharepoint_password: ${{ secrets.username }}
+          sharepoint_password: ${{ secrets.password }}
 
   allure_report:
     name: Upload Allure Report to SharePoint
@@ -51,7 +52,13 @@ jobs:
         if: always()
         run: npm run allureCombine
 
-      - name: Upload Allure Report HTML to SharePoint
+      - name: Copy Allure HTML report to upload folder
+        if: always()
+        run: |
+          mkdir -p upload
+          cp test/.artifacts/allure-report/complete.html upload/
+
+      - name: Upload Allure Report to SharePoint
         if: always()
         uses: obrassard/action-sharepoint-publish@v1.0.1
         with:
@@ -59,4 +66,3 @@ jobs:
           library_folder: 'personal/anil_alexander_testingmavens_com/Documents/SHAREPOINT'
           sharepoint_user: ${{ secrets.username }}
           sharepoint_password: ${{ secrets.password }}
-          source_path: 'test/.artifacts/allure-report/complete.html'

@@ -17,10 +17,10 @@ jobs:
       - name: Publish to SharePoint
         uses: obrassard/action-sharepoint-publish@v1.0.1
         with:
-          site_url: 'https://you.sharepoint.com/sites/mySite'
-          library_folder: 'Shared documents/releases'
-          sharepoint_user: ${{ secrets.USER }}
-          sharepoint_password: ${{ secrets.PASSWORD }}
+          site_url: 'https://testingmavens-my.sharepoint.com'
+          library_folder: 'personal/anil_alexander_testingmavens_com/Documents/SHAREPOINT'
+          sharepoint_user: ${{ secrets.username }}
+          sharepoint_password: ${{ secrets.username }}
 
   allure_report:
     name: Upload Allure Report to SharePoint
